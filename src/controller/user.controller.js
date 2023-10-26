@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUsers, getUserBiId, createUser, updateUser } = require('../service/user.service');
+const { getAllUsers, deleteUsers, getById, updateUsers, createUsers, patchUsers } = require('../service/user.service');
 const route = express.Router();
 
 route.get('/', (req, res) => {
@@ -9,12 +9,12 @@ route.get('/', (req, res) => {
     } catch (error) {
         res.status(404).send(error.message);
     }
-});
+})
 
 route.get('/:id', (req, res) => {
     try {
         const { id } = req.params;
-        const data = getUserBiId(id);
+        const data = getById(id);
         res.status(200).send(data);
     } catch (error) {
         res.status(404).send(error.message);
@@ -24,8 +24,8 @@ route.get('/:id', (req, res) => {
 route.post('/', (req, res) => {
     try {
         const { name, surname, email, pwd } = req.body;
-        const data = createUser(name, surname, email, pwd);
-        res.status(201).send(data)
+        const data = createUsers(name, surname, email, pwd);
+        res.status(200).send(data);
     } catch (error) {
         res.status(404).send(error.message);
     }
@@ -35,11 +35,32 @@ route.put('/:id', (req, res) => {
     try {
         const { id } = req.params;
         const { name, surname, email, pwd } = req.body;
-        const data = updateUser(id, name, surname, email, pwd);
+        const data = updateUsers(id, name, surname, email, pwd);
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(404).send(error.message);
+    }
+});
+
+route.patch('/:id', (req, res) => {
+    try {
+        const { id } = req.params;
+        const clientObj = req.body;
+        const data = patchUsers(id, clientObj);
         res.status(200).send(data);
     } catch (error) {
         res.status(404).send(error.message);
     }
 })
 
-module.exports = { route };
+route.delete('/:id', (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = deleteUsers(id);
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(404).send(error.message);
+    }
+})
+
+module.exports = route;
