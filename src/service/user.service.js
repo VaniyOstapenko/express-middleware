@@ -45,9 +45,6 @@ function updateUsers(id, name, surname, email, pwd) {
 
 function patchUsers(id, clientObj) {
     const data = JSON.parse(fs.readFileSync(path));
-    // const oldData = data.filter((el) => el.id == id);
-    // if (oldData.length == 0) throw new Error('id is not faund')
-    // const newData = { ...oldData[0], ...clientObj };
     const oldData = data.find((el) => el.id == id);
     const newData = { ...oldData, ...clientObj };
     const filtered = data.filter((el) => el.id != id);
