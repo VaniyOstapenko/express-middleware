@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUsers, deleteUsers, getById, updateUsers, createUsers, patchUsers } = require('../service/user.service');
+const { getAllUsers, getById, updateUsers, createUsers, patchUsers } = require('../service/user.service');
 const route = express.Router();
 
 route.get('/', (req, res) => {
@@ -47,16 +47,6 @@ route.patch('/:id', (req, res) => {
         const { id } = req.params;
         const clientObj = req.body;
         const data = patchUsers(id, clientObj);
-        res.status(200).send(data);
-    } catch (error) {
-        res.status(404).send(error.message);
-    }
-})
-
-route.delete('/:id', (req, res) => {
-    try {
-        const { id } = req.params;
-        const data = deleteUsers(id);
         res.status(200).send(data);
     } catch (error) {
         res.status(404).send(error.message);

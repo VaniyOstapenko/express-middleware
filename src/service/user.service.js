@@ -54,12 +54,5 @@ function patchUsers(id, clientObj) {
     return filtered;
 }
 
-function deleteUsers(id) {
-    const data = JSON.parse(fs.readFileSync(path));
-    const filtered = data.filter((el) => el.id != id);
-    if (filtered.length == data.length) throw new Error('id отсутствует');
-    fs.writeFileSync(path, JSON.stringify(filtered));
-    return filtered;
-}
 
-module.exports = { getAllUsers, deleteUsers, getById, updateUsers, createUsers, patchUsers };
+module.exports = { getAllUsers, getById, updateUsers, createUsers, patchUsers };
